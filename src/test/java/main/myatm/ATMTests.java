@@ -161,7 +161,9 @@ public class ATMTests {
         when(card.checkPin(pinCode)).thenReturn(true);
         atm.validateCard(card, pinCode);
         atm.getCash(amount);
-        
+        InOrder order = inOrder(account);
+        order.verify(account).getBalance();
+        order.verify(account).withdrow(amount);
 
     }
 
