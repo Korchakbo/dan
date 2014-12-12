@@ -13,7 +13,7 @@ public class ATM {
         this.card = null;
     }
 
-    // Возвращает каоличестов денег в банкомате
+    // Возвращает количество денег в банкомате
     public double getMoneyInATM() {
         return this.moneyInATM;
     }

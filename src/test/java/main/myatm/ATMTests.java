@@ -17,29 +17,29 @@ public class ATMTests {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetNullIllegalArgumentException() {
-        new ATM(-21);
+        new ATM(-14);
 
     }
 
 
     @Test
     public void testGetMoneyInATMExpectedEquals() {
-        //double actionMoney = 42;
-        ATM atm = new ATM(42);
-        double expectedResult = 42;
+
+        ATM atm = new ATM(88);
+        double expectedResult = 88;
         assertEquals(atm.getMoneyInATM(), expectedResult, 0.0);
     }
 
 
     @Test(expected = NullPointerException.class)
     public void testValidateCardCardIsNullThrownIllegalArgumentException() {
-        ATM atm = new ATM(42);
-        atm.validateCard(null, 42);
+        ATM atm = new ATM(88);
+        atm.validateCard(null, 88);
     }
 
     @Test
     public void testValidateCardBlockedCard() {
-        ATM atm = new ATM(42);
+        ATM atm = new ATM(14);
         Card card = mock(Card.class);
         when(card.isBlocked()).thenReturn(true);
         boolean result = atm.validateCard(card, 5);
@@ -49,7 +49,7 @@ public class ATMTests {
 
     @Test
     public void testValidateCardCardAccepted() {
-        ATM atm = new ATM(42);
+        ATM atm = new ATM(88);
         Card card = mock(Card.class);
         int pinCode = 1111;
         when(card.isBlocked()).thenReturn(false);
@@ -61,14 +61,14 @@ public class ATMTests {
 
     @Test(expected = NoCardExeption.class)
     public void testCheckBalanceCardIsNullThrownNoCardInsertion() throws NoCardExeption {
-        ATM atm = new ATM(42);
+        ATM atm = new ATM(14);
         atm.checkBalance();
 
     }
 
     @Test
     public void testCheckBalanceExcpectedAllGood() throws NoCardExeption {
-        ATM atm = new ATM(42);
+        ATM atm = new ATM(14);
 
         Card card = mock(Card.class);
         int pinCode = 1111;
@@ -161,9 +161,7 @@ public class ATMTests {
         when(card.checkPin(pinCode)).thenReturn(true);
         atm.validateCard(card, pinCode);
         atm.getCash(amount);
-        InOrder order = inOrder(account);
-        order.verify(account).getBalance();
-        order.verify(account).withdrow(amount);
+        
 
     }
 
