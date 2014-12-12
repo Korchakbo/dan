@@ -10,17 +10,16 @@ import static org.mockito.Mockito.*;
 
 public class ATMTests {
     @Test(expected = IllegalArgumentException.class)
-    public void testSetNegativeMoneyInATMThrownIllegalArgumentException()  {
+    public void testSetNegativeMoneyInATMThrownIllegalArgumentException() {
         new ATM(0);
 
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testSetNullIllegalArgumentException()  {
+    public void testSetNullIllegalArgumentException() {
         new ATM(-21);
 
     }
-
 
 
     @Test
@@ -32,8 +31,7 @@ public class ATMTests {
     }
 
 
-
-    @Test (expected = NullPointerException.class)
+    @Test(expected = NullPointerException.class)
     public void testValidateCardCardIsNullThrownIllegalArgumentException() {
         ATM atm = new ATM(42);
         atm.validateCard(null, 42);
@@ -44,10 +42,11 @@ public class ATMTests {
         ATM atm = new ATM(42);
         Card card = mock(Card.class);
         when(card.isBlocked()).thenReturn(true);
-        boolean result = atm.validateCard(card,5);
+        boolean result = atm.validateCard(card, 5);
 
         assertFalse(result);
     }
+
     @Test
     public void testValidateCardCardAccepted() {
         ATM atm = new ATM(42);
@@ -55,20 +54,20 @@ public class ATMTests {
         int pinCode = 1111;
         when(card.isBlocked()).thenReturn(false);
         when(card.checkPin(pinCode)).thenReturn(true);
-        boolean result = atm.validateCard(card,pinCode);
+        boolean result = atm.validateCard(card, pinCode);
         assertTrue(result);
     }
 
 
-    @Test (expected = NoCardExeption.class)
-    public void testCheckBalanceCardIsNullThrownNoCardInsertion() throws NoCardExeption{
+    @Test(expected = NoCardExeption.class)
+    public void testCheckBalanceCardIsNullThrownNoCardInsertion() throws NoCardExeption {
         ATM atm = new ATM(42);
         atm.checkBalance();
 
     }
 
     @Test
-    public void testCheckBalanceExcpectedAllGood() throws NoCardExeption{
+    public void testCheckBalanceExcpectedAllGood() throws NoCardExeption {
         ATM atm = new ATM(42);
 
         Card card = mock(Card.class);
@@ -79,24 +78,24 @@ public class ATMTests {
         when(card.getAccount()).thenReturn(account);
         when(card.isBlocked()).thenReturn(false);
         when(card.checkPin(pinCode)).thenReturn(true);
-        atm.validateCard(card,pinCode);
+        atm.validateCard(card, pinCode);
         double expectedResult = 1000;
-        assertEquals(atm.checkBalance(),expectedResult,0.0);
+        assertEquals(atm.checkBalance(), expectedResult, 0.0);
 
     }
 
-    @Test (expected = NoCardExeption.class)
-    public void testGetCashCardIsNullThrownNoCardInserted() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException{
+    @Test(expected = NoCardExeption.class)
+    public void testGetCashCardIsNullThrownNoCardInserted() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException {
         ATM atm = new ATM(1000);
-        double amount =123;
+        double amount = 123;
         assertNull(atm.getCash(amount));
 
     }
 
-    @Test (expected = NotEnoughMoneyOnCardException.class)
-    public void testGetCashThronwNotEnoughMoneyInAccount() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException{
+    @Test(expected = NotEnoughMoneyOnCardException.class)
+    public void testGetCashThronwNotEnoughMoneyInAccount() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException {
 
-        double amount =1001;
+        double amount = 1001;
         ATM atm = new ATM(5);
 
         Card card = mock(Card.class);
@@ -107,14 +106,14 @@ public class ATMTests {
         when(card.getAccount()).thenReturn(account);
         when(card.isBlocked()).thenReturn(false);
         when(card.checkPin(pinCode)).thenReturn(true);
-        atm.validateCard(card,pinCode);
+        atm.validateCard(card, pinCode);
         atm.getCash(amount);
     }
 
-    @Test (expected = NotEnoughMoneyInATMExeption.class)
-    public void testGetCashThronwNotEnoughMoneyInATM() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException{
+    @Test(expected = NotEnoughMoneyInATMExeption.class)
+    public void testGetCashThronwNotEnoughMoneyInATM() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException {
 
-        double amount =1001;
+        double amount = 1001;
         ATM atm = new ATM(5);
 
         Card card = mock(Card.class);
@@ -125,14 +124,14 @@ public class ATMTests {
         when(card.getAccount()).thenReturn(account);
         when(card.isBlocked()).thenReturn(false);
         when(card.checkPin(pinCode)).thenReturn(true);
-        atm.validateCard(card,pinCode);
+        atm.validateCard(card, pinCode);
         atm.getCash(amount);
     }
 
     @Test
-    public void testGetCashBalanceBalanceCheckedAtLeastOnce() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException{
+    public void testGetCashBalanceBalanceCheckedAtLeastOnce() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException {
 
-        double amount =1000;
+        double amount = 1000;
         ATM atm = new ATM(10000);
         Card card = mock(Card.class);
         int pinCode = 1111;
@@ -142,15 +141,15 @@ public class ATMTests {
         when(card.getAccount()).thenReturn(account);
         when(card.isBlocked()).thenReturn(false);
         when(card.checkPin(pinCode)).thenReturn(true);
-        atm.validateCard(card,pinCode);
+        atm.validateCard(card, pinCode);
         atm.getCash(amount);
         verify(account, atLeastOnce()).getBalance();
     }
 
     @Test
-    public void testGetCashBalanceBalanceOrderGetBalanceBeforeWithDraw() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException{
+    public void testGetCashBalanceBalanceOrderGetBalanceBeforeWithDraw() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException {
 
-        double amount =1000;
+        double amount = 1000;
         ATM atm = new ATM(10000);
         Card card = mock(Card.class);
         int pinCode = 1111;
@@ -169,9 +168,9 @@ public class ATMTests {
     }
 
     @Test
-    public void testGetCashAllOk() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException{
+    public void testGetCashAllOk() throws NoCardExeption, NotEnoughMoneyInATMExeption, NotEnoughMoneyOnCardException {
 
-        double amount =1000;
+        double amount = 1000;
         ATM atm = new ATM(1000);
 
         Card card = mock(Card.class);
@@ -182,7 +181,7 @@ public class ATMTests {
         when(card.getAccount()).thenReturn(account);
         when(card.isBlocked()).thenReturn(false);
         when(card.checkPin(pinCode)).thenReturn(true);
-        atm.validateCard(card,pinCode);
+        atm.validateCard(card, pinCode);
         atm.getCash(amount);
     }
 
